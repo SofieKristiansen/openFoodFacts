@@ -79,14 +79,18 @@
                     `;
 
                     element.addEventListener('click', () => {
+                        // Vi tager data om produktet og laver det om til en streng (JSON format)
+                        const productData = JSON.stringify({
+                            product_name: productName,
+                            image_url: imageUrl,
+                            nutriments: product.nutriments // Tilføj flere data, hvis nødvendigt
+                        });
 
-                        // Sæt navnet ind i søgefeltet
-                        search.value = productName;
-
-                        // Udfør en ny søgning
-                        const event = new Event('input');
-                        search.dispatchEvent(event);
+                        // Naviger til produkt.html med produktdata i query string
+                        window.location.href = `produkt.html?product=${encodeURIComponent(productData)}`;
                     });
+
+
 
                     foodContainer.appendChild(element);
                     count++;
