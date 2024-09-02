@@ -18,3 +18,33 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 @import "bootstrapComponents";
 
 // 5. Du kan lave styling her...
+
+
+.custom-card {
+	width: 20rem;
+	height: 30rem; /* Fast højde på kortet */
+	margin-bottom: 10px;
+	background-position: center;
+
+	transition: transform .2s;
+
+	&:hover{
+		transform: scale(1.1);
+	}
+
+	.card-img-top {
+		height: 20rem; /* Fast højde på billedet */
+		width: 100%;   /* Billedet fylder hele bredden af kortet */
+		object-fit: cover; /* Bevarer aspektforholdet og beskærer billedet om nødvendigt */
+
+	}
+
+	.card-body {
+		overflow: hidden; /* Forhindrer tekst i at løbe ud over kortet */
+	}
+}
+
+.row {
+	gap: 1rem; /* Alternativ til g-3, hvis det ikke virker som forventet */
+}
+

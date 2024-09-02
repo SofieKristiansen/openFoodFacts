@@ -1,40 +1,99 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="da" data-bs-theme="dark">
 <head>
     <meta charset="utf-8">
-    
-    <title>Open Food Facts</title>
-    
+    <title>Søgefunktion</title>
     <meta name="robots" content="All">
     <meta name="author" content="Udgiver">
     <meta name="copyright" content="Information om copyright">
-    
     <link href="css/styles.css" rel="stylesheet" type="text/css">
-    
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+
+<body class="bg-dark-subtle">
+<div class="container">
+    <div class="row my-5 justify-content-center">
+        <div class="col-md-4">
+            <label class="form-label d-block text-center" for="search">Hvad søger du? 🔎</label>
+            <div class="input-group">
+                <input class="form-control" id="search" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div id="foodContainer" class="row row-cols-auto g-3 justify-content-center"></div>
+
+</div>
 
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    //https://wiki.openfoodfacts.org/API/Read
-    
-    //Søger efter produktet med stregkoden: 5741000224427
-    fetch(`https://dk.openfoodfacts.org/api/v0/product/5741000224427.json`)
-        .then(response => response.json())
-        .then(json => {
-            console.log(json);
-        });
-    
-    //Søger efter produkter med "cola" i navnet
-    fetch(`https://dk.openfoodfacts.org/cgi/search.pl?search_terms=cola&search_simple=1&action=process&json=1`)
-        .then(response => response.json())
-        .then(json => {
-            console.log(json);
-        });
 
 
-        hej
-    </script>
+    const search = document.querySelector('#search');
+    const foodContainer = document.querySelector('#foodContainer');
+    let max = 10;
+
+    search.addEventListener('input', () => {
+        const query = search.value.trim();
+
+        if (query.length < 3){
+            foodContainer.innerHTML = '';
+            return;
+        }
+
+        // Rigtig URL-opbygning med query parameter
+        const url = `https://dk.openfoodfacts.org/cgi/search.pl?search_terms=${query}&search_simple=1&action=process&json=1`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(json => {
+                foodContainer.innerHTML = ''; // Tøm containeren for tidligere resultater
+
+                const products = json.products || []; // Hent produkterne fra JSON
+
+                let count = 0;
+
+                for (const product of products) {
+                    if (count >= max) break; // Begræns til maksimalt 10 resultater
+
+
+                    // Tjekker om der findes et billede i API-dataen
+                    if (!product.image_url) {
+                        continue; // Hvis der ikke er noget billede, springes denne iteration over
+                    }
+
+                    const imageUrl = product.image_url;
+                    const productName = product.product_name || 'Ingen navn';
+                    const productBrand = product.brands || 'Ukendt mærke';
+
+
+                    const element = document.createElement('div');
+
+                    element.innerHTML = `
+                        <div class="card custom-card">
+                            <img src="${imageUrl}" class="card-img-top img-fluid billede" alt="${productName}">
+                            <div class="card-body">
+                                <h5 class="card-title">${productName}</h5>
+                                <p class="card-text">${productBrand}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    element.addEventListener('click', () => {
+
+                        // Sæt navnet ind i søgefeltet
+                        search.value = productName;
+
+                        // Udfør en ny søgning
+                        const event = new Event('input');
+                        search.dispatchEvent(event);
+                    });
+
+                    foodContainer.appendChild(element);
+                    count++;
+                }
+            })
+            .catch(error => console.error('Fejl ved indhentning af data:', error));
+    });
+</script>
 </body>
 </html>
