@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <title>Favoritter</title>
+  <meta name="robots" content="All">
+  <meta name="author" content="Udgiver">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container my-5">
+  <h1>Mine Favoritter</h1>
+  <div id="favoritesContainer" class="row row-cols-auto g-3 justify-content-center">
+    <!-- Likede produkter vil blive vist her -->
+  </div>
+</div>
+
+
+
+<script src="https://kit.fontawesome.com/e1b81ca238.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const favoritesContainer = document.getElementById('favoritesContainer');
+    const likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
+
+    likedProducts.forEach(product => {
+      const element = document.createElement('div');
+      element.className = 'col-md-4';
+      element.innerHTML = `
+                <div class="card">
+                    <img src="${product.image_url}" class="card-img-top" alt="${product.product_name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.product_name}</h5>
+                        <p class="card-text">${product.brands}</p>
+                    </div>
+                </div>
+            `;
+      favoritesContainer.appendChild(element);
+    });
+
+    if (likedProducts.length === 0) {
+      favoritesContainer.innerHTML = '<p>Ingen favoritter endnu.</p>';
+    }
+  });
+
+</script>
+</body>
+</html>
