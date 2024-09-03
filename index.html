@@ -66,11 +66,12 @@
                     const productBrand = product.brands || 'Ukendt mærke';
 
 
+
                     const element = document.createElement('div');
 
                     element.innerHTML = `
                         <div class="card custom-card">
-                            <img src="${imageUrl}" class="card-img-top img-fluid billede" alt="${productName}">
+                            <img src="${imageUrl}" class="card-img-top img-fluid" alt="${productName}">
                             <div class="card-body">
                                 <h5 class="card-title">${productName}</h5>
                                 <p class="card-text">${productBrand}</p>
@@ -78,17 +79,21 @@
                         </div>
                     `;
 
+                    // Dette henter data om et produkt og sender det til en ny side, hvor vi viser detaljer om produktet.
                     element.addEventListener('click', () => {
-                        // Vi tager data om produktet og laver det om til en streng (JSON format)
                         const productData = JSON.stringify({
                             product_name: productName,
                             image_url: imageUrl,
-                            nutriments: product.nutriments // Tilføj flere data, hvis nødvendigt
+                            brands: productBrand,
+                            nutriments: product.nutriments, // Sørg for at inkludere nødvendige data
+                            allergens: product.allergens || '', // Inkluder allergener, hvis tilgængeligt
+                            ingredients_text: product.ingredients_text || '' // Inkluder ingredienser, hvis tilgængeligt
                         });
 
                         // Naviger til produkt.html med produktdata i query string
                         window.location.href = `produkt.html?product=${encodeURIComponent(productData)}`;
                     });
+
 
 
 
@@ -98,6 +103,29 @@
             })
             .catch(error => console.error('Fejl ved indhentning af data:', error));
     });
+
+
+    document.getElementById('likeIcon').addEventListener('click', () => {
+        const likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
+
+        const productData = {
+            product_name: product.product_name,
+            image_url: product.image_url,
+            brands: product.brands || 'Ukendt mærke'
+        };
+
+        likedProducts.push(productData);
+        localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+
+        // Ændrer hjertet til et udfyldt hjerte og viser en besked
+        document.getElementById('likeIcon').classList.remove('fa-regular');
+        document.getElementById('likeIcon').classList.add('fa-solid', 'text-danger');
+        alert('Du har tilføjet produktet til dine favoritter!');
+    });
+
+
+
+
 </script>
 </body>
 </html>

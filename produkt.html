@@ -157,12 +157,10 @@
     }
 
 
-    // Først finder vi hjerte-ikonet ved hjælp af dets ID
-    const likeIcon = document.getElementById('likeIcon');
-
     // Når brugeren liker et produkt
     likeIcon.addEventListener('click', function() {
         let likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
+
         // Tjek om hjertet allerede er liket (ved at tjekke om det har klassen 'fa-solid')
         if (likeIcon.classList.contains('fa-regular')) {
             likeIcon.classList.remove('fa-regular');
@@ -173,17 +171,17 @@
             likedProducts.push(productData);
             localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
         } else {
-
             // Hvis det allerede er liket, fjern det igen
             likeIcon.classList.remove('fa-solid', 'text-danger');
             likeIcon.classList.add('fa-regular');
             alert('Du har fjernet like på dette produkt!');
 
             // Fjern produkt fra likedProducts
-            likedProducts = likedProducts.filter(item => item.id !== productData.id);
+            likedProducts = likedProducts.filter(item => item.product_name !== productData.product_name);
             localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
         }
     });
+
 
 
 
