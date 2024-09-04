@@ -9,13 +9,13 @@
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-success-subtle">
 
 <div class="container my-5">
     <div class="row">
 
         <div class="col-12 d-flex justify-content-between align-items-center">
-            <i class="fa-solid fs-1 fa-arrow-left" onclick="goBack()"></i>
+            <i id="backButton" class="fa-solid fs-1 fa-arrow-left"></i>
             <h1 class="display-4 text-center position-absolute start-50 translate-middle-x">Mine favoritter</h1>
         </div>
 
@@ -31,13 +31,18 @@
 
 <script>
 
-    function goBack() {
-        window.history.back();
-    }
 
     document.addEventListener('DOMContentLoaded', () => {
         renderFavorites();
     });
+
+    // Tilføj en event listener til tilbage-knappen
+    document.getElementById('backButton').addEventListener('click', goBack);
+
+    function goBack() {
+        window.history.back();
+    }
+
 
     function renderFavorites() {
         const favoritesContainer = document.getElementById('favoritesContainer');
