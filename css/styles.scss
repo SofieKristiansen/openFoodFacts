@@ -25,22 +25,37 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
 	height: 30rem; /* Fast højde på kortet */
 	margin-bottom: 10px;
 	background-position: center;
-
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	transition: transform .2s;
 
-	&:hover{
-		transform: scale(1.1);
+	&:hover {
+		transform: scale(1.05);
 	}
 
 	.card-img-top {
-		height: 20rem; /* Fast højde på billedet */
+		height: 15rem; /* Fast højde på billedet */
 		width: 100%;   /* Billedet fylder hele bredden af kortet */
 		object-fit: cover; /* Bevarer aspektforholdet og beskærer billedet om nødvendigt */
-
 	}
 
 	.card-body {
-		overflow: hidden; /* Forhindrer tekst i at løbe ud over kortet */
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding-top: 15px; /* Lidt mere afstand mellem billede og tekst */
+		height: 10rem; /* Fast højde for at holde det konsistent */
+		overflow: hidden; /* Skjul overskydende tekst */
+		text-overflow: ellipsis; /* Tilføj tre prikker for lang tekst */
+	}
+
+	.card-text {
+		margin-top: auto; /* Skubber brand-navnet ned */
+		margin-bottom: 0; /* Fjerner ekstra afstand under brand-navnet */
+		white-space: nowrap; /* Sørg for at teksten ikke brydes til flere linjer */
+		overflow: hidden; /* Skjul overskydende tekst */
+		text-overflow: ellipsis; /* Tilføj tre prikker for lang tekst */
 	}
 }
 
