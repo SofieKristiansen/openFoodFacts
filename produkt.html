@@ -157,34 +157,43 @@
     }
 
 
-    // Når brugeren liker et produkt
+    // Først finder vi hjerte-ikonet ved hjælp af dets ID
+    const likeIcon = document.getElementById('likeIcon');
+    let likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
+
+    // Tjek om produktet allerede er i favoritterne
+    function isProductLiked() {
+        return likedProducts.some(item => item.product_name === productData.product_name);
+    }
+
+    // Indstil hjertets udseende baseret på om produktet er liket
+    if (isProductLiked()) {
+        likeIcon.classList.remove('fa-regular');
+        likeIcon.classList.add('fa-solid', 'text-danger');
+    }
+
+    // Når brugeren klikker på hjerteikonet
     likeIcon.addEventListener('click', function() {
-        let likedProducts = JSON.parse(localStorage.getItem('likedProducts')) || [];
-
-        // Tjek om hjertet allerede er liket (ved at tjekke om det har klassen 'fa-solid')
-        if (likeIcon.classList.contains('fa-regular')) {
-            likeIcon.classList.remove('fa-regular');
-            likeIcon.classList.add('fa-solid', 'text-danger');
-            alert('Du har liket dette produkt!');
-
-            // Tilføj produkt til likedProducts
-            likedProducts.push(productData);
-            localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
-        } else {
-            // Hvis det allerede er liket, fjern det igen
-            likeIcon.classList.remove('fa-solid', 'text-danger');
-            likeIcon.classList.add('fa-regular');
-            alert('Du har fjernet like på dette produkt!');
-
+        if (isProductLiked()) {
             // Fjern produkt fra likedProducts
             likedProducts = likedProducts.filter(item => item.product_name !== productData.product_name);
             localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+
+            // Opdater hjerteikonet til tomt
+            likeIcon.classList.remove('fa-solid', 'text-danger');
+            likeIcon.classList.add('fa-regular');
+            alert('Du har fjernet like på dette produkt!');
+        } else {
+            // Tilføj produkt til likedProducts
+            likedProducts.push(productData);
+            localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+
+            // Opdater hjerteikonet til fyldt
+            likeIcon.classList.remove('fa-regular');
+            likeIcon.classList.add('fa-solid', 'text-danger');
+            alert('Du har liket dette produkt!');
         }
     });
-
-
-
-
 </script>
 </body>
 </html>
