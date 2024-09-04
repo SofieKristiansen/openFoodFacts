@@ -8,21 +8,35 @@
     <meta name="copyright" content="Information om copyright">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-success-subtle">
-<div class="container">
-    <div class="row my-5 justify-content-center">
-        <div class="col-md-5">
-            <label class="form-label d-block text-center display-4" for="search">Hvad søger du? 🔎</label>
-            <div class="input-group">
-                <input class="form-control mt-4" id="search" placeholder="Indsæt tekst her..">
+<div class="container my-5">
+    <!-- Her står overskriften og favoritter-knappen -->
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h1 class="display-4 text-center position-absolute start-50 translate-middle-x">Hvad søger du? 🔎</h1>
+            <div class="d-flex align-items-center ms-auto">
+                <a href="favoritter.html" class="btn btn-outline-dark border-3 rounded-pill">Mine favoritter</a>
             </div>
         </div>
     </div>
-    <div id="foodContainer" class="row row-cols-auto g-3 justify-content-center"></div>
 
+    <!-- Søgefeltet -->
+    <div class="row mt-5 justify-content-center">
+        <div class="col-md-5">
+            <input class="form-control mt-4" id="search" placeholder="Indsæt tekst her..">
+        </div>
+    </div>
+
+    <!-- Søgeresultater -->
+    <div id="foodContainer" class="row row-cols-auto g-3 justify-content-center mt-5">
+        <!-- Her vil resultaterne af din søgning blive vist -->
+    </div>
 </div>
+
 
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script>
