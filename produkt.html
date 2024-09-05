@@ -158,7 +158,7 @@
     const allergenAlertIcon = document.getElementById('allergenAlertIcon');
 
     if (productData.allergens && productData.allergens.length > 0) {
-        const allergens = productData.allergens.toLowerCase().split(/[\s,;]+/); // Opdel ved kommaer, semikolon eller mellemrum
+        const allergens = productData.allergens.split(/[;,]+/);
 
         allergensList.innerHTML = ''; // Tøm listen før tilføjelse
 
@@ -180,7 +180,7 @@
     // Vis ingredienser som en liste
     const ingredientsList = document.getElementById('ingredientsList');
     if (productData.ingredients_text) {
-        const ingredients = productData.ingredients_text.split(/[\s,;]+/); // Opdel ved kommaer, semikolon eller mellemrum
+        const ingredients = productData.ingredients_text.split(/[;,]+/);
 
         ingredientsList.innerHTML = ''; // Tøm listen før tilføjelse
 
