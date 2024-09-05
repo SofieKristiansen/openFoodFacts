@@ -16,18 +16,18 @@
 <div class="container my-5">
     <!-- Her står overskriften og favoritter-knappen -->
     <div class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <h1 class="display-4 text-center position-absolute start-50 translate-middle-x">Hvad søger du? 🔎</h1>
-            <div class="d-flex align-items-center ms-auto">
-                <a href="favoritter.html" class="btn btn-outline-dark border-3 rounded-pill">Mine favoritter</a>
-            </div>
+        <!-- Brug flex til at sikre, at overskriften forbliver centreret -->
+        <div class="col-12 d-flex flex-column flex-md-row justify-content-center align-items-center">
+            <h1 class="display-4 text-center">Hvad søger du? 🔎</h1>
+            <!-- Knap til favoritter -->
+            <a href="favoritter.html" class="btn btn-outline-dark border-3 rounded-pill ms-md-4 mt-3 mt-md-0">Mine favoritter</a>
         </div>
     </div>
 
     <!-- Søgefeltet -->
     <div class="row mt-5 justify-content-center">
         <div class="col-md-5">
-            <input class="form-control mt-4" id="search" placeholder="Indsæt tekst her..">
+            <input class="form-control" id="search" placeholder="Indsæt tekst her..">
         </div>
     </div>
 
@@ -36,6 +36,8 @@
         <!-- Her vil resultaterne af din søgning blive vist -->
     </div>
 </div>
+
+
 
 
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
